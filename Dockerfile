@@ -17,6 +17,7 @@ RUN sleep 31 \
  && cd                      fltk          \
  && ./autogen.sh                          \
  && ./configure                           \
+      --disable-shared --enable-static    \
  && make                                  \
  && make DESTDIR=/tmp/fltk install        \
  && cd           /tmp/fltk                \
