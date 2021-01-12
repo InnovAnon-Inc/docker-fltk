@@ -7,7 +7,8 @@ COPY --from=innovanon/libpng     /tmp/libpng.txz     /tmp/
 COPY --from=innovanon/jpeg-turbo /tmp/jpeg-turbo.txz /tmp/
 RUN cat   /tmp/*.txz  \
   | tar Jxf - -i -C / \
- && rm -v /tmp/*.txz
+ && rm -v /tmp/*.txz  \
+ && ldconfig
 FROM builder-02 as fltk
 ARG LFS=/mnt/lfs
 USER lfs
@@ -21,6 +22,7 @@ RUN sleep 31 \
  && make                                  \
  && make DESTDIR=/tmp/fltk install        \
  && cd           /tmp/fltk                \
+ && strip.sh .                            \
  && tar acf        ../fltk.txz .          \
  && rm -rf        $LFS/sources/fltk
 
