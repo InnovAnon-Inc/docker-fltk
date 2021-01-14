@@ -1,4 +1,5 @@
 FROM innovanon/doom-base as builder-02
+USER root
 # doom
 COPY --from=innovanon/zlib        /tmp/zlib.txz          /tmp/
 COPY --from=innovanon/bzip2       /tmp/bzip2.txz         /tmp/
@@ -65,7 +66,7 @@ RUN sleep 31 \
  && make DESTDIR=/tmp/fltk install        \
  && cd           /tmp/fltk                \
  && strip.sh .                            \
- && tar acf        ../fltk.txz .          \
+ && tar  pacf        ../fltk.txz .          \
  && rm -rf        $LFS/sources/fltk
 
 FROM scratch as final
